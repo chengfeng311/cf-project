@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<canvas id="canvas1" width="500" height="500" style="border:1px solid #ddd;" ></canvas>
+		<input type="color" id="color"/>
+		<script>
+			var p = $('#canvas1').get(0).getContext('2d');
+//			p.strokeStyle = '#000';
+			
+			var open = false;	//画线的开关
+			$('#canvas1').mousedown(function(e){
+				var x = e.pageX - $(this).offset().left;
+				var y = e.pageY - $(this).offset().top;
+				p.beginPath();
+				open = true;
+				p.moveTo(x,y);
+			}).mousemove(function(e){
+				var x = e.pageX - $(this).offset().left;
+				var y = e.pageY - $(this).offset().top;
+				if(open){	//开关打开，才能画线
+					p.lineTo(x,y);
+					p.stroke();
+				}
+			}).mouseup(function(){
+				p.closePath();
+				open = false;
+			})
+			
+			$('#color').change(function(){
+				p.strokeStyle = $(this).val();
+				
+			})
+		</script>
+	</body>
+</html>
